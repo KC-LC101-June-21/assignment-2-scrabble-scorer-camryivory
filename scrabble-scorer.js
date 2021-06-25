@@ -1,3 +1,6 @@
+// // Assignment Link: https://education.launchcode.org/js-independent-track/assignments/scrabble-scorer.html 
+// //
+
 // inspired by https://exercism.io/tracks/javascript/exercises/etl/solutions/91f99a3cca9548cebe5975d7ebca6a85
 
 const input = require("readline-sync");
@@ -33,18 +36,67 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   userWord = input.question("Let's play some scrabble! Enter a word to score: ");
+  //  console.log(oldScrabbleScorer(userWord))
+  // console.log(simpleScore(userWord))
+  return userWord
 };
 
-let simpleScore;
 
-let vowelBonusScore;
+//SCORING FUNCTIONS//
 
-let scrabbleScore;
+let simpleScore = function(word){
+  return word.length
+  };
 
-const scoringAlgorithms = [];
 
-function scorerPrompt() {}
+let vowelBonusScore = function(word){
+  let vowelArray = ["a","e","i","o",'u']
+  let vowelScore = 0
+  let consonantScore = 0
+  for (let i = 0; i < word.length; i++){
+    if (vowelArray.includes(word[i])){
+      vowelScore += 3
+    } else if (vowelArray.includes(word[i]) === false){
+      consonantScore += 1
+    }
+  } return vowelScore + consonantScore
+};
+
+
+let scrabbleScore = oldScrabbleScorer;
+
+
+//Scoring Objects//
+
+let simpleScoreObject = {
+  name: "Simple Score",
+  description: "Each letter is worth 1 point",
+  scoringFunction: simpleScore
+
+};
+
+let bonusVowelObject = {
+  name: "Bonus Vowels",
+  description: "Vowels are 3 pts, consonants are 1 pt.",
+  scoringFunction: vowelBonusScore
+};
+
+let scrabbleScoreObject = {
+  name: "Scrabble",
+  description: "The traditional scoring algorithm",
+  scoringFunction: scrabbleScore
+};
+
+
+const scoringAlgorithms = [simpleScoreObject, bonusVowelObject, scrabbleScoreObject];
+
+function scorerPrompt() {
+  let userScorer = input.question(`Which scoring algorithm would you like to use? `)
+  while (userScorer > 2 || userScorer < 0){
+    userScorer = input.question(`Invalid entry.  Please enter a number between 0-2`)
+  } return console.log(`Score for ${userWord}:\n ${scoringAlgorithms[userScorer].name}\n ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
+}
 
 function transform() {};
 
@@ -52,6 +104,7 @@ let newPointStructure;
 
 function runProgram() {
    initialPrompt();
+   scorerPrompt(initialPrompt)
    
 }
 
@@ -69,4 +122,3 @@ module.exports = {
 	runProgram: runProgram,
 	scorerPrompt: scorerPrompt
 };
-
