@@ -92,10 +92,15 @@ let scrabbleScoreObject = {
 const scoringAlgorithms = [simpleScoreObject, bonusVowelObject, scrabbleScoreObject];
 
 function scorerPrompt() {
-  let userScorer = input.question(`Which scoring algorithm would you like to use? `)
+ console.log(`Which scoring algorithm would you like to use?\n`)
+  for (let i = 0; i < scoringAlgorithms.length; i ++){
+    console.log(`${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}\n`)
+  }
+   
+  let userScorer = input.question(`Enter 0, 1, or 2: `)
   while (userScorer > 2 || userScorer < 0){
-    userScorer = input.question(`Invalid entry.  Please enter a number between 0-2`)
-  } return console.log(`Score for ${userWord}:\n ${scoringAlgorithms[userScorer].name}\n ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
+    userScorer = input.question(`Invalid entry.  Please enter a number between 0-2: `)
+  } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
 }
 
 function transform() {};
