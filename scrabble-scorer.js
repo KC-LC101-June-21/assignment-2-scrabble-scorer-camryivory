@@ -64,21 +64,20 @@ let vowelBonusScore = function(word){
 };
 
 
-function transform(oldObject) {
-let newPoints = {};
-for (letter in oldObject){
-  for (let i = 0; i < oldObject[letter].length; i++){
-   
-
-  newPoints[(oldObject[letter])[i]] = letter;
+function transform(oldPointStructure) {
+  let newPoints = {};
+  for (let pointValue in oldPointStructure){
+    for (let i = 0; i < oldPointStructure[pointValue].length; i++){
+      newPoints[oldPointStructure[pointValue][i]] = pointValue;
+    }
   }
   // console.log(newPoints)
   // console.log(`The key is${item}; the value is:  ${oldObject[item]}. The length is:${oldObject[item].length}`)
-
+  return newPoints;
 } 
 
-return newPoints
-};
+
+
 
 let newPointStructure = transform(oldPointStructure)
 
@@ -139,8 +138,8 @@ function scorerPrompt() {
 function runProgram() {
    initialPrompt();
    scorerPrompt(initialPrompt);
-// console.log(newPointStructure)
-// console.log(typeof newPointsStructure)
+console.log(newPointStructure)
+console.log(typeof newPointsStructure)
 
    
 }
