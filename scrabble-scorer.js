@@ -63,8 +63,19 @@ let vowelBonusScore = function(word){
   } return vowelScore + consonantScore
 };
 
+//I'm stuck here!  How do I iterate over a newPointsStructure that hasn't been created yet?
 
-let scrabbleScore = oldScrabbleScorer;
+let scrabbleScore = function(word) {
+  let scrabbleLetterPoints = "";
+  for (let i = 0; i < word.length; i++){
+    for (key in newPoints)
+      if newPoints.includes(word[i]){
+        scrabbleLetterPoints += (newPoints[i])[i]
+        }
+
+    }
+  } return scrabbleLetterPoints
+}
 
 
 //Scoring Objects//
@@ -103,8 +114,8 @@ function scorerPrompt() {
   } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
 }
 
+const newPoints = {};
 function transform(oldObject) {
-  let newPoints = {}
 for (key in oldObject){
   for (let i = 0; i < oldObject[key].length; i++){
    
@@ -124,7 +135,7 @@ let newPointStructure = transform(oldPointStructure)
 function runProgram() {
    initialPrompt();
    scorerPrompt(initialPrompt);
-   console.log(newPointStructure)
+  console.log(newPoints)
    
 }
 
