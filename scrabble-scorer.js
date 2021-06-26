@@ -103,13 +103,28 @@ function scorerPrompt() {
   } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
 }
 
-function transform() {};
+function transform(oldObject) {
+  let newPoints = {}
+for (key in oldObject){
+  for (let i = 0; i < oldObject[key].length; i++){
+   
 
-let newPointStructure;
+  newPoints[(oldObject[key])[i]] = key;
+  }
+  // console.log(newPoints)
+  // console.log(`The key is${item}; the value is:  ${oldObject[item]}. The length is:${oldObject[item].length}`)
+
+} 
+return newPoints
+};
+
+let newPointStructure = transform(oldPointStructure)
+
 
 function runProgram() {
    initialPrompt();
-   scorerPrompt(initialPrompt)
+   scorerPrompt(initialPrompt);
+   console.log(newPointStructure)
    
 }
 
