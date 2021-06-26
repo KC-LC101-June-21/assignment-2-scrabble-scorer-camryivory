@@ -80,7 +80,6 @@ return newPoints
 
 let newPointStructure = transform(oldPointStructure)
 
-//I'm stuck here!  How do I iterate over a newPointsStructure that hasn't been created yet?
 
 let scrabbleScore = function(word) {
   word = word.toUpperCase();
@@ -126,11 +125,10 @@ function scorerPrompt() {
     console.log(`${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}\n`)
   }
    
-  let userScorer =input.question(`Enter 0, 1, or 2: `)
-  while (Number(userScorer) > 2 || Number(userScorer) < 0 || typeof userScorer === "string"){
+  let userScorer = input.question(`Enter 0, 1, or 2: `)
+  while (userScorer < 0 || userScorer > 2){
      userScorer = input.question(`Invalid entry.  Please enter a number between 0-2: `)
-  } return console.log(typeof userScorer)
-  // } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
+  } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
 }
 
 
