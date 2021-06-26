@@ -16,7 +16,7 @@ const oldPointStructure = {
 };
 
 function oldScrabbleScorer(word) {
-	word = word.toUpperCase();
+	word = word.toLowerCase();
 	let letterPoints = "";
  
 	for (let i = 0; i < word.length; i++) {
@@ -63,18 +63,20 @@ let vowelBonusScore = function(word){
   } return vowelScore + consonantScore
 };
 
-const newPoints = {};
+
 function transform(oldObject) {
-for (key in oldObject){
-  for (let i = 0; i < oldObject[key].length; i++){
+let newPoints = {};
+for (letter in oldObject){
+  for (let i = 0; i < oldObject[letter].length; i++){
    
 
-  newPoints[(oldObject[key])[i]] = key;
+  newPoints[(oldObject[letter])[i]] = letter;
   }
   // console.log(newPoints)
   // console.log(`The key is${item}; the value is:  ${oldObject[item]}. The length is:${oldObject[item].length}`)
 
 } 
+
 return newPoints
 };
 
@@ -87,7 +89,7 @@ let scrabbleScore = function(word) {
   for (let i = 0; i < word.length; i++){
     for (letter in newPointStructure){
       if (letter === word[i]){
-        scrabbleLetterPoints += newPointStructure[letter];
+        scrabbleLetterPoints += Number(newPointStructure[letter]);
       }
     }
   } 
@@ -137,6 +139,8 @@ function scorerPrompt() {
 function runProgram() {
    initialPrompt();
    scorerPrompt(initialPrompt);
+// console.log(newPointStructure)
+// console.log(typeof newPointsStructure)
 
    
 }
