@@ -70,7 +70,7 @@ function transform(oldPointStructure) {
     for (let i = 0; i < oldPointStructure[pointValue].length; i++){
       const upperLetter = oldPointStructure[pointValue][i];
 
-      newPoints[upperLetter.toLowerCase()] = pointValue;
+      newPoints[upperLetter.toLowerCase()] = Number(pointValue);
     }
   }
   // console.log(newPoints)
