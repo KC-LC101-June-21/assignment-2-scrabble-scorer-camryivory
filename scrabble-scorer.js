@@ -68,7 +68,9 @@ function transform(oldPointStructure) {
   let newPoints = {};
   for (let pointValue in oldPointStructure){
     for (let i = 0; i < oldPointStructure[pointValue].length; i++){
-      newPoints[oldPointStructure[pointValue][i]] = pointValue;
+      const upperLetter = oldPointStructure[pointValue][i];
+
+      newPoints[upperLetter.toLowerCase()] = pointValue;
     }
   }
   // console.log(newPoints)
