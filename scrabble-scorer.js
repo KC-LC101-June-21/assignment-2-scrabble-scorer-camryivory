@@ -63,18 +63,36 @@ let vowelBonusScore = function(word){
   } return vowelScore + consonantScore
 };
 
+const newPoints = {};
+function transform(oldObject) {
+for (key in oldObject){
+  for (let i = 0; i < oldObject[key].length; i++){
+   
+
+  newPoints[(oldObject[key])[i]] = key;
+  }
+  // console.log(newPoints)
+  // console.log(`The key is${item}; the value is:  ${oldObject[item]}. The length is:${oldObject[item].length}`)
+
+} 
+return newPoints
+};
+
+let newPointStructure = transform(oldPointStructure)
+
 //I'm stuck here!  How do I iterate over a newPointsStructure that hasn't been created yet?
 
 let scrabbleScore = function(word) {
-  let scrabbleLetterPoints = "";
+  word = word.toUpperCase();
+  let scrabbleLetterPoints = 0;
   for (let i = 0; i < word.length; i++){
-    for (key in newPoints)
-      if newPoints.includes(word[i]){
-        scrabbleLetterPoints += (newPoints[i])[i]
-        }
-
+    for (letter in newPointStructure){
+      if (letter === word[i]){
+        scrabbleLetterPoints += Number(newPointStructure[letter]);
+      }
     }
-  } return scrabbleLetterPoints
+  } 
+  return scrabbleLetterPoints;
 }
 
 
@@ -108,34 +126,20 @@ function scorerPrompt() {
     console.log(`${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}\n`)
   }
    
-  let userScorer = input.question(`Enter 0, 1, or 2: `)
-  while (userScorer > 2 || userScorer < 0){
-    userScorer = input.question(`Invalid entry.  Please enter a number between 0-2: `)
-  } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
+  let userScorer =input.question(`Enter 0, 1, or 2: `)
+  while (Number(userScorer) > 2 || Number(userScorer) < 0 || typeof userScorer === "string"){
+     userScorer = input.question(`Invalid entry.  Please enter a number between 0-2: `)
+  } return console.log(typeof userScorer)
+  // } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
 }
 
-const newPoints = {};
-function transform(oldObject) {
-for (key in oldObject){
-  for (let i = 0; i < oldObject[key].length; i++){
-   
 
-  newPoints[(oldObject[key])[i]] = key;
-  }
-  // console.log(newPoints)
-  // console.log(`The key is${item}; the value is:  ${oldObject[item]}. The length is:${oldObject[item].length}`)
-
-} 
-return newPoints
-};
-
-let newPointStructure = transform(oldPointStructure)
 
 
 function runProgram() {
    initialPrompt();
    scorerPrompt(initialPrompt);
-  console.log(newPoints)
+
    
 }
 
