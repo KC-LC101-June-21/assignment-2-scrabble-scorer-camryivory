@@ -16,7 +16,7 @@ const oldPointStructure = {
 };
 
 function oldScrabbleScorer(word) {
-	word = word.toLowerCase();
+	word = word.toUpperCase();
 	let letterPoints = "";
  
 	for (let i = 0; i < word.length; i++) {
@@ -51,6 +51,7 @@ let simpleScore = function(word){
 
 
 let vowelBonusScore = function(word){
+  word = word.toLowerCase();
   let vowelArray = ["a","e","i","o",'u']
   let vowelScore = 0
   let consonantScore = 0
@@ -64,20 +65,24 @@ let vowelBonusScore = function(word){
 };
 
 
+
+////SOOOOO Stuck on Transform!  The function as-is returns the right score but wrong lettercase in the newPoints object.  Adding .toLowerCase() corrects the lettercase in the object, but breaks the scoring function.  Whyyyyy??
+
+
+
+
 function transform(oldPointStructure) {
   let newPoints = {};
-  for (let pointValue in oldPointStructure){
+  for (pointValue in oldPointStructure){
     for (let i = 0; i < oldPointStructure[pointValue].length; i++){
-      const upperLetter = oldPointStructure[pointValue][i];
+      let upperLetter = oldPointStructure[pointValue][i];
 
       newPoints[upperLetter.toLowerCase()] = Number(pointValue);
     }
   }
-  // console.log(newPoints)
-  // console.log(`The key is${item}; the value is:  ${oldObject[item]}. The length is:${oldObject[item].length}`)
+
   return newPoints;
 } 
-
 
 
 
@@ -85,7 +90,7 @@ let newPointStructure = transform(oldPointStructure)
 
 
 let scrabbleScore = function(word) {
-  word = word.toUpperCase();
+  word = word.toLowerCase();
   let scrabbleLetterPoints = 0;
   for (let i = 0; i < word.length; i++){
     for (letter in newPointStructure){
@@ -140,8 +145,7 @@ function scorerPrompt() {
 function runProgram() {
    initialPrompt();
    scorerPrompt(initialPrompt);
-console.log(newPointStructure)
-console.log(typeof newPointsStructure)
+   console.log(newPointStructure)
 
    
 }
