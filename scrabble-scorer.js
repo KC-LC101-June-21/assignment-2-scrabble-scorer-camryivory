@@ -1,3 +1,6 @@
+// // Assignment Link: https://education.launchcode.org/js-independent-track/assignments/scrabble-scorer.html 
+// //
+
 // inspired by https://exercism.io/tracks/javascript/exercises/etl/solutions/91f99a3cca9548cebe5975d7ebca6a85
 
 const input = require("readline-sync");
@@ -33,25 +36,117 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   userWord = input.question("Let's play some scrabble! Enter a word to score: ");
+  //  console.log(oldScrabbleScorer(userWord))
+  // console.log(simpleScore(userWord))
+  return userWord
 };
 
-let simpleScore;
 
-let vowelBonusScore;
+//SCORING FUNCTIONS//
 
-let scrabbleScore;
+let simpleScore = function(word){
+  return word.length
+  };
 
-const scoringAlgorithms = [];
 
-function scorerPrompt() {}
+let vowelBonusScore = function(word){
+  word = word.toLowerCase();
+  let vowelArray = ["a","e","i","o",'u']
+  let vowelScore = 0
+  let consonantScore = 0
+  for (let i = 0; i < word.length; i++){
+    if (vowelArray.includes(word[i])){
+      vowelScore += 3
+    } else if (vowelArray.includes(word[i]) === false){
+      consonantScore += 1
+    }
+  } return vowelScore + consonantScore
+};
 
-function transform() {};
 
-let newPointStructure;
+
+////SOOOOO Stuck on Transform!  The function as-is returns the right score but wrong lettercase in the newPoints object.  Adding .toLowerCase() corrects the lettercase in the object, but breaks the scoring function.  Whyyyyy??
+
+
+
+
+function transform(oldPointStructure) {
+  let newPoints = {};
+  for (pointValue in oldPointStructure){
+    for (let i = 0; i < oldPointStructure[pointValue].length; i++){
+      let upperLetter = oldPointStructure[pointValue][i];
+
+      newPoints[upperLetter.toLowerCase()] = Number(pointValue);
+    }
+  }
+
+  return newPoints;
+} 
+
+
+
+let newPointStructure = transform(oldPointStructure)
+
+
+let scrabbleScore = function(word) {
+  word = word.toLowerCase();
+  let scrabbleLetterPoints = 0;
+  for (let i = 0; i < word.length; i++){
+    for (letter in newPointStructure){
+      if (letter === word[i]){
+        scrabbleLetterPoints += Number(newPointStructure[letter]);
+      }
+    }
+  } 
+  return scrabbleLetterPoints;
+}
+
+
+//Scoring Objects//
+
+let simpleScoreObject = {
+  name: "Simple Score",
+  description: "Each letter is worth 1 point",
+  scoringFunction: simpleScore
+
+};
+
+let bonusVowelObject = {
+  name: "Bonus Vowels",
+  description: "Vowels are 3 pts, consonants are 1 pt.",
+  scoringFunction: vowelBonusScore
+};
+
+let scrabbleScoreObject = {
+  name: "Scrabble",
+  description: "The traditional scoring algorithm",
+  scoringFunction: scrabbleScore
+};
+
+
+const scoringAlgorithms = [simpleScoreObject, bonusVowelObject, scrabbleScoreObject];
+
+function scorerPrompt() {
+ console.log(`Which scoring algorithm would you like to use?\n`)
+  for (let i = 0; i < scoringAlgorithms.length; i ++){
+    console.log(`${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}\n`)
+  }
+   
+  let userScorer = input.question(`Enter 0, 1, or 2: `)
+  while (userScorer < 0 || userScorer > 2){
+     userScorer = input.question(`Invalid entry.  Please enter a number between 0-2: `)
+  } return console.log(`Score for '${userWord}': ${scoringAlgorithms[userScorer].scoringFunction(userWord)}`)
+}
+
+
+
 
 function runProgram() {
    initialPrompt();
+   scorerPrompt(initialPrompt);
+   console.log(newPointStructure)
+
    
 }
 
@@ -69,4 +164,3 @@ module.exports = {
 	runProgram: runProgram,
 	scorerPrompt: scorerPrompt
 };
-
